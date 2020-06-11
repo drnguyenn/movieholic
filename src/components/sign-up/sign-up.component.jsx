@@ -5,7 +5,13 @@ import { signUpStart } from '../../redux/user/user.actions';
 
 import CustomButton from '../custom-button/custom-button.component';
 
-import { SignUpContainer, SignUpTitle } from './sign-up.styles';
+import { TextField } from '@material-ui/core';
+
+import {
+  SignUpContainer,
+  SignUpTitle,
+  ButtonsGroupContainer
+} from './sign-up.styles';
 
 const SignUp = ({ signUpStart }) => {
   const [userCredentials, setUserCredentials] = useState({
@@ -45,7 +51,51 @@ const SignUp = ({ signUpStart }) => {
     <SignUpContainer>
       <SignUpTitle>I do not have an account</SignUpTitle>
       <span>Sign up with your email and password.</span>
-      <CustomButton>SIGN UP</CustomButton>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          required
+          name='displayName'
+          type='text'
+          value={displayName}
+          onChange={handleChange}
+          label='Display name'
+          margin='normal'
+          fullWidth
+        />
+        <TextField
+          required
+          name='email'
+          type='email'
+          value={email}
+          onChange={handleChange}
+          label='Email'
+          margin='normal'
+          fullWidth
+        />
+        <TextField
+          required
+          name='password'
+          type='password'
+          value={password}
+          onChange={handleChange}
+          label='Password'
+          margin='normal'
+          fullWidth
+        />
+        <TextField
+          required
+          name='confirmPassword'
+          type='password'
+          value={confirmPassword}
+          onChange={handleChange}
+          label='Confirm Password'
+          margin='normal'
+          fullWidth
+        />
+        <ButtonsGroupContainer>
+          <CustomButton>SIGN UP</CustomButton>
+        </ButtonsGroupContainer>
+      </form>
     </SignUpContainer>
   );
 };

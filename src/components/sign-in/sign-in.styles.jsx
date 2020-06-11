@@ -23,7 +23,8 @@ export const IconGroup = styled.div`
   align-items: center;
 `;
 
-export const ButtonsBarContainer = styled.div`
+export const ButtonsGroupContainer = styled.div`
+  margin-top: 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;

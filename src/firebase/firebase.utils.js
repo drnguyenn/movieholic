@@ -25,6 +25,11 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!snapShot.exists) {
     const { displayName, email, photoURL } = userAuth;
     const isAdmin = false;
+    const firstName = '';
+    const lastName = '';
+    const phoneNumber = '';
+    const gender = '';
+    const age = '';
     const createdAt = new Date();
 
     try {
@@ -33,6 +38,11 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         email,
         photoURL,
         isAdmin,
+        firstName,
+        lastName,
+        phoneNumber,
+        gender,
+        age,
         createdAt,
         ...additionalData
       });
@@ -72,6 +82,8 @@ export const addSampleReviewCollectionAndDocumentsToFirestore = async movieIds =
 
     batch.set(newReviewDocRef, {
       userId: 'JqQIlnctKDMumwduNy9mnq4lhju2',
+      displayName: 'Long Nguyễn',
+      photoURL: 'https://graph.facebook.com/1632165466941231/picture',
       comment: 'This is an awesome movie !',
       ratings: 8.5,
       spoil: false,
