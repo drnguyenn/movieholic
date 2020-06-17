@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
+import firebase, {firestore} from "../../firebase/firebase.utils";
+
 import {
   TextField,
   Select,
   MenuItem,
   FormControl,
-  InputLabel
+  InputLabel,
+  Dialog, DialogActions, DialogTitle
 } from '@material-ui/core';
 
 import CustomButton from '../custom-button/custom-button.component';
@@ -20,6 +23,7 @@ import {
 
 const ProfileInputForm = ({ currentUser }) => {
   const [userInfo, setUserInfo] = useState(currentUser);
+  const [open, setOpen] = React.useState(false);
 
   const {
     displayName,
@@ -32,11 +36,38 @@ const ProfileInputForm = ({ currentUser }) => {
 
   const handleSubmit = async event => {
     event.preventDefault();
+
+    const userID = firebase.auth().currentUser.uid;
+    const userRef = firestore.doc(`users/${userID}`);
+    userRef.update({
+      displayName: displayName,
+      firstName: firstName,
+      lastName: lastName,
+      phoneNumber: phoneNumber,
+      age: age,
+      gender: gender
+    })
+
+    currentUser.displayName = displayName;
+    currentUser.firstName = firstName;
+    currentUser.lastName = lastName;
+    currentUser.phoneNumber = phoneNumber;
+    currentUser.age = age;
+    currentUser.gender = gender;
+
   };
 
   const handleChange = event => {
     const { name, value } = event.target;
     setUserInfo({ ...userInfo, [name]: value });
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -112,7 +143,13 @@ const ProfileInputForm = ({ currentUser }) => {
           </FormControl>
         </AgeAndGenderInput>
         <ButtonsGroupContainer>
-          <CustomButton>SAVE</CustomButton>
+          <CustomButton onClick={handleClickOpen}>SAVE </CustomButton>
+          <Dialog open={open} onClose={handleClose}>
+            <DialogTitle >{"Update profile successfully!"}</DialogTitle>
+            <DialogActions>           
+              <CustomButton onClick={handleClose}>Agree </CustomButton>            
+            </DialogActions>
+          </Dialog>
         </ButtonsGroupContainer>
       </form>
     </ProfileInputFormContainer>
