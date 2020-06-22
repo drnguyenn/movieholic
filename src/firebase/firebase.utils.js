@@ -169,16 +169,25 @@ export const getReviewCollections = async snapshot => {
   }));
 };
 
+const chunk = (arr, chunkSize) =>
+  Array(Math.ceil(arr.length / chunkSize))
+    .fill()
+    .map((_, i) => arr.slice(i * chunkSize, i * chunkSize + chunkSize));
+
 const getReviewers = reviews =>
   Promise.all(
-    reviews.map(async review => {
-      const reviewerRef = firestore.doc(`users/${review.userId}`);
-      const snapshot = await reviewerRef.get();
+    chunk(reviews, 10).map(async reviewChunk => {
+      const reviewersRef = firestore.collection('users').where(
+        firebase.firestore.FieldPath.documentId(),
+        'in',
+        reviewChunk.map(review => review.userId)
+      );
+      const snapshot = await reviewersRef.get();
 
-      return { id: snapshot.id, ...snapshot.data() };
+      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     })
   )
-    .then(reviewers => reviewers)
+    .then(reviewers => [].concat(...reviewers))
     .catch(error => console.log(error));
 
 export const createReview = async (movieId, review) => {
