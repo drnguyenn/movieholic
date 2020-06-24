@@ -1,10 +1,12 @@
 import React from 'react';
 
+import MovieReviewsOverviewSection from '../../components/movie-reviews-overview-section/movie-reviews-overview-section.component';
+
 import './administration.styles.scss';
 
 const AdministrationPage = () => (
   <div>
-    <h1>Administration Page</h1>
+    <MovieReviewsOverviewSection />
   </div>
 );
 

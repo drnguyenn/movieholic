@@ -12,16 +12,6 @@ export const selectReviews = createSelector(
   review => review.reviews
 );
 
-export const selectIsReviewsFetching = createSelector(
-  [selectReview],
-  review => review.isFetching
-);
-
-export const selectIsReviewsLoaded = createSelector(
-  [selectReview],
-  review => !!review.reviews
-);
-
 export const selectUsersReview = userIds =>
   createSelector([selectReviews], reviews =>
     reviews
@@ -39,3 +29,13 @@ export const selectOtherUsersReview = userIds =>
         )
       : null
   );
+
+export const selectIsReviewsFetching = createSelector(
+  [selectReview],
+  review => review.isFetching
+);
+
+export const selectIsReviewsLoaded = createSelector(
+  [selectReview],
+  review => review.reviews.length !== 0
+);
