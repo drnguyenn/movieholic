@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ReviewContainer = styled.div`
   width: 90%;
-  min-height: 150px;
+  min-height: 170px;
   max-height: 400px;
   margin-bottom: 15px;
   border: solid darkgray 1px;
@@ -14,7 +14,6 @@ export const ReviewContainer = styled.div`
 export const ReviewHeader = styled.div`
   height: 60px;
   border-bottom: solid darkgray 1px;
-  margin-bottom: 2%;
   padding-left: 10px;
   display: flex;
   justify-content: space-between;
@@ -50,6 +49,14 @@ export const PostedTime = styled.span`
 `;
 
 export const ReviewOptions = styled.div``;
+
+export const CoverAndContent = styled.div`
+  position: relative;
+  padding-top: 2%;
+  width: 100%;
+  height: 100%;
+  min-height: 110px;
+`;
 
 export const ReviewContent = styled.div`
   display: flex;

@@ -211,7 +211,7 @@ export const createReview = async (movieId, review) => {
 };
 
 export const updateReview = async (movieId, review) => {
-  const { id, comment, rating } = review;
+  const { id, comment, rating, isSpoiler } = review;
   const editedAt = new Date();
 
   const reviewRef = firestore.doc(`movieReviews/${movieId}/reviews/${id}`);
@@ -224,6 +224,7 @@ export const updateReview = async (movieId, review) => {
         {
           comment,
           rating,
+          isSpoiler,
           editedAt
         },
         { merge: true }

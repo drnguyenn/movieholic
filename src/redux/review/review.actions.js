@@ -15,9 +15,13 @@ export const fetchReviewsFailure = errorMessage => ({
   payload: errorMessage
 });
 
-export const createReviewStart = (movieId, review) => ({
+export const createReviewStart = (
+  movieId,
+  review,
+  { displayName, photoURL }
+) => ({
   type: ReviewActionTypes.CREATE_REVIEW_START,
-  payload: { movieId, review }
+  payload: { movieId, review, user: { displayName, photoURL } }
 });
 
 export const createReviewSuccess = review => ({
@@ -30,9 +34,13 @@ export const createReviewFailure = errorMessage => ({
   payload: errorMessage
 });
 
-export const updateReviewStart = (movieId, review) => ({
+export const updateReviewStart = (
+  movieId,
+  review,
+  { displayName, photoURL }
+) => ({
   type: ReviewActionTypes.UPDATE_REVIEW_START,
-  payload: { movieId, review }
+  payload: { movieId, review, user: { displayName, photoURL } }
 });
 
 export const updateReviewSuccess = review => ({

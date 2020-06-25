@@ -11,6 +11,7 @@ import {
 
 import CustomButton from '../custom-button/custom-button.component';
 
+import { FormControlLabel, Checkbox } from '@material-ui/core';
 import { Rating } from '@material-ui/lab';
 import { StarBorder } from '@material-ui/icons';
 
@@ -18,6 +19,7 @@ import {
   ReviewEditorContainer,
   CommentBox,
   OptionBar,
+  CheckboxAndRating,
   RatingAndLabel,
   Label
 } from './review-editor.styles';
@@ -31,22 +33,28 @@ const ReviewEditor = ({
   currentUsersReview,
   width
 }) => {
-  const [hover, setHover] = React.useState(-1);
+  const [hover, setHover] = useState(-1);
 
   const [review, setReview] = useState({
     comment: currentUsersReview ? currentUsersReview.comment : '',
-    rating: currentUsersReview ? currentUsersReview.rating : 10
+    rating: currentUsersReview ? currentUsersReview.rating : 10,
+    isSpoiler: currentUsersReview ? currentUsersReview.isSpoiler : false
   });
 
-  const { comment, rating } = review;
+  const { comment, rating, isSpoiler } = review;
 
   const { movieId } = useParams();
 
   const handleChange = event => {
-    const { name, value } = event.target;
+    const { name, value, checked } = event.target;
     setReview({
       ...review,
-      [name]: name === 'rating' ? parseFloat(value) : value
+      [name]:
+        name === 'rating'
+          ? parseFloat(value)
+          : name === 'isSpoiler'
+          ? checked
+          : value
     });
   };
 
@@ -56,52 +64,71 @@ const ReviewEditor = ({
     event.preventDefault();
 
     if (!isEditing)
-      createReviewStart(movieId, {
-        userId,
-        displayName,
-        photoURL,
-        comment,
-        rating,
-        isSpoiler: false
-      });
+      createReviewStart(
+        movieId,
+        {
+          userId,
+          comment,
+          rating,
+          isSpoiler
+        },
+        { displayName, photoURL }
+      );
     else {
-      updateReviewStart(movieId, {
-        id: currentUsersReview.id,
-        comment,
-        rating,
-        isSpoiler: false
-      });
+      updateReviewStart(
+        movieId,
+        {
+          id: currentUsersReview.id,
+          comment,
+          rating,
+          isSpoiler
+        },
+        { displayName, photoURL }
+      );
 
       onFinish();
     }
 
-    setReview({ ...review, comment: '', rating: 0 });
+    setReview({ ...review, comment: '', rating: 0, isSpoiler: false });
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <ReviewEditorContainer width={width}>
         <CommentBox
-          className='comment-box'
           name='comment'
           value={comment}
           onChange={handleChange}
           placeholder='Leave a comment here...'
         />
         <OptionBar>
-          <RatingAndLabel>
-            <Rating
-              name='rating'
-              value={rating}
-              max={10}
-              emptyIcon={<StarBorder fontSize='inherit' />}
-              onChange={handleChange}
-              onChangeActive={(event, newHover) => {
-                setHover(newHover);
-              }}
+          <CheckboxAndRating>
+            <RatingAndLabel>
+              <Rating
+                name='rating'
+                value={rating}
+                max={10}
+                emptyIcon={<StarBorder fontSize='inherit' />}
+                onChange={handleChange}
+                onChangeActive={(event, newHover) => {
+                  setHover(newHover);
+                }}
+              />
+              <Label>{hover !== -1 ? hover : rating}</Label>
+            </RatingAndLabel>
+            <FormControlLabel
+              style={{ margin: 0 }}
+              control={
+                <Checkbox
+                  name='isSpoiler'
+                  checked={isSpoiler}
+                  onChange={handleChange}
+                  size='small'
+                />
+              }
+              label='This comment is a spoiler'
             />
-            <Label>{hover !== -1 ? hover : rating}</Label>
-          </RatingAndLabel>
+          </CheckboxAndRating>
           <CustomButton>Post</CustomButton>
         </OptionBar>
       </ReviewEditorContainer>
@@ -114,10 +141,10 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createReviewStart: (movieId, review) =>
-    dispatch(createReviewStart(movieId, review)),
-  updateReviewStart: (movieId, review) =>
-    dispatch(updateReviewStart(movieId, review))
+  createReviewStart: (movieId, review, user) =>
+    dispatch(createReviewStart(movieId, review, user)),
+  updateReviewStart: (movieId, review, user) =>
+    dispatch(updateReviewStart(movieId, review, user))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReviewEditor);

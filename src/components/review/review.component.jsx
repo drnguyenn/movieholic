@@ -7,6 +7,7 @@ import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { deleteReviewStart } from '../../redux/review/review.actions';
 
 import ReviewEditor from '../review-editor/review-editor.component';
+import CommentCover from '../comment-cover/comment-cover.component';
 
 import {
   Avatar,
@@ -30,6 +31,7 @@ import {
   Author,
   PostedTime,
   ReviewOptions,
+  CoverAndContent,
   ReviewContent,
   Rating,
   Comment
@@ -113,15 +115,18 @@ const Review = ({
           </ReviewOptions>
         ) : null}
       </ReviewHeader>
-      <ReviewContent>
-        <Rating>
-          <Star
-            style={{ color: 'yellow', fontSize: '1.8vw', padding: '0 0.2em' }}
-          />
-          {rating}
-        </Rating>
-        <Comment>{comment}</Comment>
-      </ReviewContent>
+      <CoverAndContent>
+        {isSpoiler && currentUserId !== userId ? <CommentCover /> : null}
+        <ReviewContent>
+          <Rating>
+            <Star
+              style={{ color: 'yellow', fontSize: '1.8vw', padding: '0 0.2em' }}
+            />
+            {rating}
+          </Rating>
+          <Comment>{comment}</Comment>
+        </ReviewContent>
+      </CoverAndContent>
       <Dialog
         open={isEditing}
         onClose={() => setIsEditing(false)}
@@ -132,7 +137,7 @@ const Review = ({
         <DialogContent dividers>
           <ReviewEditor
             width='100%'
-            currentUsersReview={{ id, comment, rating }}
+            currentUsersReview={{ id, comment, rating, isSpoiler }}
             isEditing={isEditing}
             onFinish={() => setIsEditing(false)}
           />

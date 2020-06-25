@@ -38,14 +38,22 @@ export function* fetchReviewsStart() {
   yield takeLatest(ReviewActionTypes.FETCH_REVIEWS_START, fetchReviewsAsync);
 }
 
-export function* createReviewStart({ payload: { movieId, review } }) {
+export function* createReviewStart({
+  payload: {
+    movieId,
+    review,
+    user: { displayName, photoURL }
+  }
+}) {
   try {
     const reviewRef = yield call(createReview, movieId, review);
     const reviewSnapshot = yield reviewRef.get();
     yield put(
       createReviewSuccess({
         id: reviewSnapshot.id,
-        ...reviewSnapshot.data()
+        ...reviewSnapshot.data(),
+        displayName,
+        photoURL
       })
     );
   } catch (error) {
@@ -53,14 +61,22 @@ export function* createReviewStart({ payload: { movieId, review } }) {
   }
 }
 
-export function* updateReviewStart({ payload: { movieId, review } }) {
+export function* updateReviewStart({
+  payload: {
+    movieId,
+    review,
+    user: { displayName, photoURL }
+  }
+}) {
   try {
     const reviewRef = yield call(updateReview, movieId, review);
     const reviewSnapshot = yield reviewRef.get();
     yield put(
       updateReviewSuccess({
         id: reviewSnapshot.id,
-        ...reviewSnapshot.data()
+        ...reviewSnapshot.data(),
+        displayName,
+        photoURL
       })
     );
   } catch (error) {
