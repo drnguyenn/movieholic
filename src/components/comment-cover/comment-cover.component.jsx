@@ -29,7 +29,7 @@ const CommentCover = () => {
           <VisibilityOff style={{ color: 'white' }} />
         )}
       </IconButton>
-      <Dialog open={isOpened}>
+      <Dialog open={isOpened} onClose={() => setIsOpened(false)}>
         <DialogTitle>Show spoiler review</DialogTitle>
         <DialogContent dividers>
           <DialogContentText>
