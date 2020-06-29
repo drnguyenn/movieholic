@@ -1,15 +1,22 @@
 import React from 'react';
+import BackgroundImage from '../../assets/images/intro-section.jpg';
 
-import './intro-section.styles.scss';
+import {
+  IntroSectionContainer,
+  Background,
+  Content,
+  Title,
+  SubTitle
+} from './intro-section.styles';
 
 const IntroSection = () => (
-  <div className='intro-section'>
-    <div className='background-image'></div>
-    <div className='content'>
-      <span className='title'>Welcome, movie lovers.</span>
-      <span className='subtitle'>You're going to the right place.</span>
-    </div>
-  </div>
+  <IntroSectionContainer>
+    <Background backgroundUrl={BackgroundImage} />
+    <Content>
+      <Title>Welcome, movie lovers.</Title>
+      <SubTitle>You're going to the right place.</SubTitle>
+    </Content>
+  </IntroSectionContainer>
 );
 
 export default IntroSection;

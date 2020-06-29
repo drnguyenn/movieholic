@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
@@ -14,30 +14,37 @@ import { Assessment } from '@material-ui/icons';
 
 import { ReactComponent as Logo } from '../../assets/icons/logo.svg';
 
-import { OptionsContainer, OptionLink } from './header.styles';
-
-import './header.styles.scss';
+import {
+  HeaderContainer,
+  LogoContainer,
+  OptionsContainer,
+  OptionLink
+} from './header.styles';
 
 const Header = ({ currentUser }) => {
   const history = useHistory();
 
   return (
-    <div className='header'>
-      <Link to='/'>
-        <Logo className='logo-container' />
-      </Link>
+    <HeaderContainer className='header'>
+      <LogoContainer to='/'>
+        <Logo style={{ width: 150, height: 'auto' }} />
+      </LogoContainer>
       <SearchBox />
       <OptionsContainer>
-        <IconButton onClick={() => history.push('/administration')}>
-          <Assessment style={{ fontSize: 27 }} />
-        </IconButton>
+        {currentUser ? (
+          currentUser.isAdmin ? (
+            <IconButton onClick={() => history.push('/administration')}>
+              <Assessment style={{ fontSize: 27 }} />
+            </IconButton>
+          ) : null
+        ) : null}
         {currentUser ? (
           <AvatarDropdown />
         ) : (
           <OptionLink to='/signin'>SIGN IN</OptionLink>
         )}
       </OptionsContainer>
-    </div>
+    </HeaderContainer>
   );
 };
 

@@ -8,8 +8,6 @@ import { signOutStart } from '../../redux/user/user.actions';
 
 import { Menu, MenuItem, IconButton, Avatar } from '@material-ui/core';
 
-import './avatar-dropdown.styles.scss';
-
 const AvatarDropdown = ({ currentUser, signOutStart }) => {
   const history = useHistory();
 

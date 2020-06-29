@@ -6,15 +6,15 @@ import { selectMoviesForPreview } from '../../redux/movie/movie.selectors';
 
 import MovieCard from '../movie-card/movie-card.component';
 
-import './movie-card-list.styles.scss';
+import { MovieCardListContainer } from './movie-card-list.styles';
 
 const MovieCardList = ({ movies }) => {
   return (
-    <div className='movie-card-list'>
+    <MovieCardListContainer className='movie-card-list'>
       {movies.map(({ id, ...otherCollectionProps }) => (
         <MovieCard key={id} id={id} {...otherCollectionProps} />
       ))}
-    </div>
+    </MovieCardListContainer>
   );
 };
 

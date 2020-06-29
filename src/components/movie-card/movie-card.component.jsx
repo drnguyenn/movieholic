@@ -3,21 +3,32 @@ import { useHistory } from 'react-router-dom';
 
 import { baseUrl } from '../../data/movie.urls';
 
-import './movie-card.styles.scss';
+import { Star } from '@material-ui/icons';
 
-const MovieCard = ({ id, poster_path, title, release_date }) => {
+import {
+  MovieCardContainer,
+  Poster,
+  AdditionalInfo,
+  Footer
+} from './movie-card.styles';
+
+const MovieCard = ({ id, poster_path, vote_average, title }) => {
   const history = useHistory();
 
-  const posterSize = '/w200'; // 200px
+  const posterSize = '/w300'; // 300px
 
   return (
-    <div className='movie-card' onClick={() => history.push(`/movies/${id}`)}>
-      <img src={`${baseUrl}${posterSize}${poster_path}`} alt='movie-poster' />
-      <span className='title'>
-        {title.length < 20 ? title : title.slice(0, 20) + '...'}
-      </span>
-      <span className='release-date'>{release_date.slice(0, 4)}</span>
-    </div>
+    <MovieCardContainer onClick={() => history.push(`/movies/${id}`)}>
+      <Poster
+        className='image'
+        posterUrl={`${baseUrl}${posterSize}${poster_path}`}
+      />
+      <AdditionalInfo className='ratings'>
+        <Star style={{ color: 'yellow', fontSize: '1.2em', paddingRight: 5 }} />{' '}
+        {vote_average}
+      </AdditionalInfo>
+      <Footer>{title}</Footer>
+    </MovieCardContainer>
   );
 };
 
