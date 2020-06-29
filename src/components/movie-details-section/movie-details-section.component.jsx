@@ -47,11 +47,7 @@ const MovieDetailsSection = ({ movie }) => {
 
     return (
       <MovieDetailsSectionContainer>
-        <Backdrop
-          style={{
-            backgroundImage: `url(${baseUrl}${backdropSize}${backdrop_path})`
-          }}
-        />
+        <Backdrop backdropUrl={`${baseUrl}${backdropSize}${backdrop_path}`} />
         <Details>
           <Poster
             src={`${baseUrl}${posterSize}${poster_path}`}

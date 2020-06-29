@@ -17,7 +17,7 @@ export const Backdrop = styled.div`
   height: 100%;
   background-size: cover;
   background-position: center;
-  background-image: ${({ backdrop_path }) => `url(${backdrop_path})`};
+  background-image: ${({ backdropUrl }) => `url(${backdropUrl})`};
   filter: brightness(0.45);
 `;
 
