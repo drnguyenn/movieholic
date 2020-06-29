@@ -46,7 +46,21 @@ const App = ({ checkUserSession, currentUser }) => {
             currentUser ? <UserProfilePage /> : <Redirect to='/signin' />
           }
         />
-        <Route exact path='/administration' component={AdministrationPage} />
+        <Route
+          exact
+          path='/administration'
+          render={() =>
+            currentUser ? (
+              currentUser.isAdmin ? (
+                <AdministrationPage />
+              ) : (
+                <Redirect to='/' />
+              )
+            ) : (
+              <Redirect to='/signin' />
+            )
+          }
+        />
       </Switch>
       <Footer />
     </div>
