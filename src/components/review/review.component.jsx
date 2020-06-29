@@ -54,6 +54,7 @@ const Review = ({
   const open = Boolean(anchorEl);
 
   const currentUserId = currentUser ? currentUser.id : '';
+  const currentUserIsAdmin = currentUser ? currentUser.isAdmin : false;
 
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -84,7 +85,7 @@ const Review = ({
             </PostedTime>
           </AuthorAndPostedTime>
         </AvatarAndAuthorAndPostedTime>
-        {currentUserId === userId ? (
+        {currentUserId === userId || currentUserIsAdmin ? (
           <ReviewOptions>
             <IconButton onClick={handleMenu} color='inherit'>
               <MoreVert />
@@ -137,7 +138,14 @@ const Review = ({
         <DialogContent dividers>
           <ReviewEditor
             width='100%'
-            currentUsersReview={{ id, comment, rating, isSpoiler }}
+            currentUsersReview={{
+              id,
+              comment,
+              rating,
+              isSpoiler,
+              displayName,
+              photoURL
+            }}
             isEditing={isEditing}
             onFinish={() => setIsEditing(false)}
           />

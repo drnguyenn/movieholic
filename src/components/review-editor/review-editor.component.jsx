@@ -83,7 +83,12 @@ const ReviewEditor = ({
           rating,
           isSpoiler
         },
-        { displayName, photoURL }
+        userId === currentUsersReview.id
+          ? { displayName, photoURL }
+          : {
+              displayName: currentUsersReview.displayName,
+              photoURL: currentUsersReview.photoURL
+            }
       );
 
       onFinish();
