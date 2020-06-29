@@ -1,13 +1,15 @@
 import React from 'react';
 
 import MovieReviewsOverviewSection from '../../components/movie-reviews-overview-section/movie-reviews-overview-section.component';
+import UserManagementSection from '../../components/user-management-section/user-management-section.component';
 
-import './administration.styles.scss';
+import { AdministrationPageContainer } from './administration.styles';
 
 const AdministrationPage = () => (
-  <div>
+  <AdministrationPageContainer>
     <MovieReviewsOverviewSection />
-  </div>
+    <UserManagementSection />
+  </AdministrationPageContainer>
 );
 
 export default AdministrationPage;

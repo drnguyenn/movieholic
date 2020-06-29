@@ -11,10 +11,8 @@ import {
   MovieReviewsDetailsTitle
 } from './movie-reviews-details.styles';
 
-const MovieReviewsDetails = ({ movie, fetchedMovieId }) => {
-  const movieToShow = movie(fetchedMovieId);
-
-  const { vote_average, vote_count } = movieToShow;
+const MovieReviewsDetails = ({ fetchedMovieId, movie }) => {
+  const { vote_average, vote_count } = movie(fetchedMovieId);
 
   return (
     <MovieReviewsDetailsContainer>
@@ -33,8 +31,8 @@ const MovieReviewsDetails = ({ movie, fetchedMovieId }) => {
 };
 
 const mapStateToProps = state => ({
-  movie: movieId => selectOneMovie(movieId)(state),
-  fetchedMovieId: selectMovieId(state)
+  fetchedMovieId: selectMovieId(state),
+  movie: movieId => selectOneMovie(movieId)(state)
 });
 
 export default connect(mapStateToProps)(MovieReviewsDetails);

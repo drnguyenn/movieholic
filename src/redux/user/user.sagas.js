@@ -10,17 +10,21 @@ import {
   updateProfileSuccess,
   updateProfileFailure,
   uploadAvatarSuccess,
-  uploadAvatarFailure
+  uploadAvatarFailure,
+  fetchUsersSuccess,
+  fetchUsersFailure
 } from './user.actions';
 
 import {
+  firestore,
   auth,
   facebookProvider,
   googleProvider,
   createUserProfileDocument,
   getCurrenUser,
   updateUserProfile,
-  uploadUserAvatar
+  uploadUserAvatar,
+  convertUsersSnapshotToMap
 } from '../../firebase/firebase.utils';
 
 import UserActionTypes from './user.types';
@@ -129,6 +133,17 @@ export function* uploadAvatarStart({ payload: { userId, file } }) {
   }
 }
 
+export function* fetchUsersStart() {
+  try {
+    const collectionRef = firestore.collection('users');
+    const snapshot = yield collectionRef.get();
+    const users = yield call(convertUsersSnapshotToMap, snapshot);
+    yield put(fetchUsersSuccess(users));
+  } catch (error) {
+    yield put(fetchUsersFailure(error.message));
+  }
+}
+
 export function* onFacebookSignInStart() {
   yield takeLatest(UserActionTypes.FACEBOOK_SIGN_IN_START, signInWithFacebook);
 }
@@ -165,6 +180,10 @@ export function* onUploadAvatarStart() {
   yield takeLatest(UserActionTypes.UPLOAD_AVATAR_START, uploadAvatarStart);
 }
 
+export function* onFetchUsersStart() {
+  yield takeLatest(UserActionTypes.FETCH_USERS_START, fetchUsersStart);
+}
+
 export function* userSagas() {
   yield all([
     call(onFacebookSignInStart),
@@ -175,6 +194,7 @@ export function* userSagas() {
     call(onSignUpStart),
     call(onSignUpSuccess),
     call(onUpdateProfileStart),
-    call(onUploadAvatarStart)
+    call(onUploadAvatarStart),
+    call(onFetchUsersStart)
   ]);
 }

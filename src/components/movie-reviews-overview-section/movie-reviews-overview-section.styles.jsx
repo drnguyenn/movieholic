@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 export const MovieReviewsOverviewSectionContainer = styled.div`
-  margin: 30px;
+  margin-bottom: 30px;
 `;
 
-export const Title = styled.h2`
+export const MovieReviewsOverviewSectionTitle = styled.h2`
   margin: 10px 0;
 `;
 

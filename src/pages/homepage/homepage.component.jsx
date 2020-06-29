@@ -3,14 +3,14 @@ import React from 'react';
 import IntroSection from '../../components/intro-section/intro-section.component';
 import MovieCardListContainer from '../../components/movie-card-list/movie-card-list.container';
 
-import './homepage.styles.scss';
+import { HomePageContainer } from './homepage.styles';
 
 const HomePage = () => {
   return (
-    <div className='home-page'>
+    <HomePageContainer>
       <IntroSection />
       <MovieCardListContainer />
-    </div>
+    </HomePageContainer>
   );
 };
 

@@ -117,6 +117,18 @@ export const addMovieCollectionAndDocumentsToFirestore = async (
   return await batch.commit();
 };
 
+export const convertUsersSnapshotToMap = users => {
+  const transformedCollections = users.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  }));
+
+  return transformedCollections.reduce((accumulator, user) => {
+    accumulator[user.id] = user;
+    return accumulator;
+  }, {});
+};
+
 export const addSampleReviewCollectionAndDocumentsToFirestore = async movieIds => {
   const batch = firestore.batch();
 

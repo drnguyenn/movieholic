@@ -5,13 +5,15 @@ import MovieReviewsDetailsContainer from '../movie-reviews-details/movie-reviews
 
 import {
   MovieReviewsOverviewSectionContainer,
-  Title,
+  MovieReviewsOverviewSectionTitle,
   MovieReviewsChartAndDetails
 } from './movie-reviews-overview-section.styles';
 
 const MovieReviewsOverviewSection = () => (
   <MovieReviewsOverviewSectionContainer>
-    <Title>Movie Ratings Overview</Title>
+    <MovieReviewsOverviewSectionTitle>
+      Movie Ratings Overview
+    </MovieReviewsOverviewSectionTitle>
     <MovieReviewsChartAndDetails>
       <MovieReviewsChartContainer />
       <MovieReviewsDetailsContainer />

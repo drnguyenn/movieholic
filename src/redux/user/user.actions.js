@@ -83,3 +83,17 @@ export const uploadAvatarFailure = error => ({
   type: UserActionTypes.UPLOAD_AVATAR_FAILURE,
   payload: error
 });
+
+export const fetchUsersStart = () => ({
+  type: UserActionTypes.FETCH_USERS_START
+});
+
+export const fetchUsersSuccess = users => ({
+  type: UserActionTypes.FETCH_USERS_SUCCESS,
+  payload: users
+});
+
+export const fetchUsersFailure = error => ({
+  type: UserActionTypes.FETCH_USERS_FAILURE,
+  payload: error
+});
