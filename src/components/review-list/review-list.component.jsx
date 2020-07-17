@@ -31,8 +31,8 @@ const ReviewList = ({
 
   return (
     <ReviewListContainer>
-      {reviews.map(({ id, ...otherCollectionProps }) => (
-        <Review key={id} id={id} {...otherCollectionProps} />
+      {reviews.map(({ id, ...otherProps }) => (
+        <Review key={id} id={id} {...otherProps} />
       ))}
     </ReviewListContainer>
   );

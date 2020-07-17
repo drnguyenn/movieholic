@@ -11,8 +11,8 @@ import { MovieCardListContainer } from './movie-card-list.styles';
 const MovieCardList = ({ movies }) => {
   return (
     <MovieCardListContainer className='movie-card-list'>
-      {movies.map(({ id, ...otherCollectionProps }) => (
-        <MovieCard key={id} id={id} {...otherCollectionProps} />
+      {movies.map(({ id, ...otherProps }) => (
+        <MovieCard key={id} id={id} {...otherProps} />
       ))}
     </MovieCardListContainer>
   );
