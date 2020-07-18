@@ -33,7 +33,7 @@ const reviewReducer = (state = INITIAL_STATE, action) => {
     case ReviewActionTypes.CREATE_REVIEW_SUCCESS:
       return {
         ...state,
-        reviews: [...state.reviews, action.payload]
+        reviews: [action.payload, ...state.reviews]
       };
 
     case ReviewActionTypes.UPDATE_REVIEW_SUCCESS:
@@ -42,8 +42,8 @@ const reviewReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         reviews: [
-          ...state.reviews.filter(review => review.id !== id),
-          action.payload
+          action.payload,
+          ...state.reviews.filter(review => review.id !== id)
         ]
       };
 
